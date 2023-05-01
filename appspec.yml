@@ -1,0 +1,25 @@
+version: 0.0
+os: ubuntu
+files:
+  - source: /
+    destination: /var/www/html/paysikka-merchant-api
+permissions:
+  - object: /var/www/html/paysikka-merchant-api
+owner: ubuntu
+group: ubuntu
+type:
+  - directory
+  - file
+hooks:
+  BeforeInstall:
+    - location: deploy_scripts/install.sh
+      timeout: 300
+      runas: root
+  ApplicationStart:
+    - location: deploy_scripts/run.sh
+      timeout: 120
+      runas: ubuntu
+  ValidateService:
+    - location: deploy_scripts/validate.sh
+      timeout: 60
+      runas: ubuntu
